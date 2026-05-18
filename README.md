@@ -17,7 +17,7 @@ A small Windows desktop tool that generates `.rmg.json` random map templates for
 
 - Configure **template name**, **player count** (2–8), and **map size**
 - Experimental map sizes available via an opt-in checkbox
-- **Auto update check** — notifies you on startup if a newer version is available on GitHub
+- **Update check** — notifies you on startup if a newer version is available on GitHub and opens the releases page for manual install
 - Automatically detects your **Olden Era install path** via Steam registry and opens the Save dialog in the correct `map_templates` folder
 - **Preview image** — generate a visual overview of the zone layout before saving; optionally save it in the template directory for in-game display
 
