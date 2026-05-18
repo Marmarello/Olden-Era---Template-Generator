@@ -80,7 +80,7 @@ public class TemplateGeneratorTests
     [Fact]
     public void TryParseReleaseVersion_AcceptsOptionalLeadingV()
     {
-        bool parsed = MainWindow.TryParseReleaseVersion("v1.2.3", out Version? version);
+        bool parsed = UpdatePolicy.TryParseReleaseVersion("v1.2.3", out Version? version);
 
         Assert.True(parsed);
         Assert.Equal(new Version(1, 2, 3), version);
@@ -89,7 +89,7 @@ public class TemplateGeneratorTests
     [Fact]
     public void BuildUpdateAvailableMessage_UsesManualInstallLanguage()
     {
-        string message = MainWindow.BuildUpdateAvailableMessage(new Version(1, 2, 3), new Version(1, 2, 0));
+        string message = UpdatePolicy.BuildUpdateAvailableMessage(new Version(1, 2, 3), new Version(1, 2, 0));
 
         Assert.Contains("GitHub releases page will be opened", message);
         Assert.Contains("install the update manually", message);

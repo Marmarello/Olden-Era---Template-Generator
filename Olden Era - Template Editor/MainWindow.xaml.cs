@@ -367,14 +367,14 @@ namespace Olden_Era___Template_Editor
                 var release = await JsonSerializer.DeserializeAsync<GitHubRelease>(stream);
                 if (release?.TagName == null) return;
 
-                if (!TryParseReleaseVersion(release.TagName, out Version? latestVersion) || latestVersion == null) return;
+                if (!UpdatePolicy.TryParseReleaseVersion(release.TagName, out Version? latestVersion) || latestVersion == null) return;
                 if (currentVersion == null || latestVersion <= currentVersion) return;
 
                 bool userAccepted = false;
                 Dispatcher.Invoke(() =>
                 {
                     var result = MessageBox.Show(
-                        BuildUpdateAvailableMessage(latestVersion, currentVersion),
+                        UpdatePolicy.BuildUpdateAvailableMessage(latestVersion, currentVersion),
                         "Update Available",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Information);
@@ -392,14 +392,6 @@ namespace Olden_Era___Template_Editor
         // Formats a Version as "vMajor.Minor" or "vMajor.Minor.Build" when build > 0.
         private static string FormatVersion(Version v)
             => v.Build > 0 ? $"v{v.Major}.{v.Minor}.{v.Build}" : $"v{v.Major}.{v.Minor}";
-
-        internal static bool TryParseReleaseVersion(string tagName, out Version? version)
-            => Version.TryParse(tagName.TrimStart('v'), out version);
-
-        internal static string BuildUpdateAvailableMessage(Version latestVersion, Version? currentVersion)
-            => $"A new version is available: {FormatVersion(latestVersion)}\n" +
-               $"You are running: {FormatVersion(currentVersion ?? new Version(0, 0))}\n\n" +
-               "The GitHub releases page will be opened so you can review and install the update manually.\n\nOpen releases page now?";
 
         // Minimal model for GitHub releases API response.
         private sealed class GitHubRelease
